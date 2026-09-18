@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:mophongsao6lo/flute_board.dart';
+import 'package:mophongsao6lo/tone_engine.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // bắt buộc khi gọi plugin trước runApp
+  try {
+    await ToneEngine.instance.init();
+  } catch (e, s) {
+    debugPrint('Khoi dong audio that bai: $e\n$s');
+  }
   runApp(const MyApp());
 }
 
@@ -44,84 +52,3 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class FluteBoard extends StatefulWidget {
-  const FluteBoard({super.key});
-
-  @override
-  State<FluteBoard> createState() {
-    return FluteBoardState();
-  }
-}
-
-class FluteBoardState extends State<FluteBoard> {
-  bool button1 = false;
-  bool button2 = false;
-  bool button3 = false;
-  bool button4 = false;
-  bool button5 = false;
-  bool button6 = false;
-
-  void toggleButton(int index) {
-    setState(() {
-      switch (index) {
-        case 1:
-          button1 = !button1;
-          break;
-        case 2:
-          button2 = !button2;
-          break;
-        case 3:
-          button3 = !button3;
-          break;
-        case 4:
-          button4 = !button4;
-          break;
-        case 5:
-          button5 = !button5;
-          break;
-        case 6:
-          button6 = !button6;
-          break;
-      }
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        TextButton(
-          onPressed: () => toggleButton(1),
-          style: ButtonStyle(minimumSize: WidgetStateProperty.all(const Size(100, 100)),),
-          child: Text('1: ${button1 ? 'ON' : 'OFF'}'),
-        ),
-        TextButton(
-          onPressed: () => toggleButton(2),
-          style: ButtonStyle(minimumSize: WidgetStateProperty.all(const Size(100, 100)),),
-          child: Text('2: ${button2 ? 'ON' : 'OFF'}'),
-        ),
-        TextButton(
-          onPressed: () => toggleButton(3),
-          style: ButtonStyle(minimumSize: WidgetStateProperty.all(const Size(100, 100)),),
-          child: Text('3: ${button3 ? 'ON' : 'OFF'}'),
-        ),
-        TextButton(
-          onPressed: () => toggleButton(4),
-          style: ButtonStyle(minimumSize: WidgetStateProperty.all(const Size(100, 100)),),
-          child: Text('4: ${button4 ? 'ON' : 'OFF'}'),
-        ),
-        TextButton(
-          onPressed: () => toggleButton(5),
-          style: ButtonStyle(minimumSize: WidgetStateProperty.all(const Size(100, 100)),),
-          child: Text('5: ${button5 ? 'ON' : 'OFF'}'),
-        ),
-        TextButton(
-          onPressed: () => toggleButton(6),
-          style: ButtonStyle(minimumSize: WidgetStateProperty.all(const Size(100, 100)),),
-          child: Text('6: ${button6 ? 'ON' : 'OFF'}'),
-        ),
-      ],
-    );
-  }
-}
